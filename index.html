@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link type="text/html" href="wishList.html">
+    <link type="text/html" href="favoriteBooks.html">
+    
+    <title>My Bookshelf</title>
+</head>
+<body id="bodyMain">
+    <div id="main" class="border">
+        <header id="header">
+            <h1 class="flex-row">My Bookshelf</h1>
+            <nav>
+                <ul style="list-style-type: none;" class="flex-row">
+                    <li><button id="renderWishListButton" type="button" class="btn btn-success">wish list</button></li>
+                    <li><button id="renderFavoritesButton" type="button" class="btn btn-success">favorites</button></li> 
+                </ul>
+            </nav>
+        </header>
+        
+        <form id="form1" class="flex-column">
+            <div><label>Enter a book for search: </label></div>
+            <div>
+                <input class="form-control" id="input" type="text" autocomplete="off" placeholder="Enter a book">
+            </div>
+            <br>
+            <input id="submitButton" type="submit" class="btn btn-secondary">
+        </form>
+    </div>
+
+    <div id="listCanvas" class="flex-row-wrap"></div>
+    <h1>Categories</h1>
+    <div id="catDiv" class="flex-row-wrap"></div>
+
+    <div>
+        <a  href="#bottom" name="top">start at bottom</a>
+        <div id="canvas" class="flex-row-wrap"></div>
+        <a href="#top" name="bottom">back to top</a>
+    </div>
+
+
+</body>
+<script type="text/javascript" src="main.js"></script>
+
+</html>

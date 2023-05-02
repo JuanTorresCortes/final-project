@@ -1,0 +1,53 @@
+body{
+    background-color: black;
+} 
+
+img{
+    background-image: url(img/flot-book.avif);
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+header{
+    margin-top: 7em;
+   
+}
+
+a{
+    color: rgb(0, 0, 0);
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-column-space-around{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.flex-row-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.border{
+    border: 2px solid black;
+}
+
+form{
+    margin-bottom: 1em;
+}
+
+a{
+    margin: 10px;
+}
