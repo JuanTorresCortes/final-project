@@ -55,7 +55,8 @@ let myFavoritesList = [];
 let myWishList = [];
 
 
-buttonForWshList.addEventListener("click", function () {
+buttonForWshList.addEventListener("click", function (event) {
+  event.stopPropagation()
     if (myWishList.length === 0) {
       alert("YOU HAVE NO BOOKS SAVED");
     } else {
@@ -101,11 +102,18 @@ function renderForWishList(myWishList) {
         img.classList.add("card-img-top");
         img.src = imgSrc;
         card.appendChild(img);
+
+         // Create a card body element 
+         const cardBody = document.createElement("div");
+         cardBody.classList.add("card-body");
+   
+          card.appendChild(cardBody);    
     
     //     button for delete
         let objBook = {
           title: bookTitle,
           src: imgSrc,
+          title: "",
         };
     //     // removes book from list
         let deleteButton = document.createElement("button");
@@ -113,9 +121,36 @@ function renderForWishList(myWishList) {
         deleteButton.value = JSON.stringify(objBook); ////////////////////////////////////////
         deleteButton.style.marginBottom = "5px";
         deleteButton.classList.add("btn", "btn-danger");
-        deleteButton.addEventListener("click", function () {
+        deleteButton.addEventListener("click", function (event) {
+          event.stopPropagation()
+          deleteButton.remove();
+          favoriteButton.remove();
+
+          let warningP = document.createElement("p")
+          warningP.innerText = "⛔️ Are your sure you want to delete this book? ⛔️"
+          warningP.style.color = "yellow"
+          cardBody.appendChild(warningP);
+
+          let noButton = document.createElement("button")
+          noButton.classList.add("btn", "btn-success")
+          noButton.innerText = "NO"
+          noButton.style.margin = "3px";
+          noButton.addEventListener("click", function(event){
+            event.stopPropagation()
+            renderForWishList(myWishList)
+          })
+          cardBody.appendChild(noButton);
+
+          let yesButton = document.createElement("button")
+          yesButton.innerText = "yes"
+          yesButton.style.margin = "3px";
+          yesButton.classList.add("btn", "btn-danger")
+          yesButton.addEventListener("click", function(event){
+            event.stopPropagation()
             card.remove();
             myWishList.splice(index, 1); // Remove book from myFavoriteList array
+          })
+          cardBody.appendChild(yesButton)
         });
         card.appendChild(deleteButton);
     
@@ -124,7 +159,8 @@ function renderForWishList(myWishList) {
         favoriteButton.innerText = "add to favorites list";
         favoriteButton.value = objBook;
         favoriteButton.classList.add("btn", "btn-success");
-        favoriteButton.addEventListener("click", function(){
+        favoriteButton.addEventListener("click", function(event){
+          event.stopPropagation()
             card.remove();// remove from card from canvas 
             myFavoritesList.push(myWishList.splice(index, 1))// add book to MyFavoritesList
             myWishList.splice(index, 1); // Remove book from myFavoriteList array
@@ -146,10 +182,12 @@ function renderForWishList(myWishList) {
   listCanvas.appendChild(container);
  }
 
-buttonForFavorites.addEventListener("click", function() {
+buttonForFavorites.addEventListener("click", function(event) {
+  event.stopPropagation()
     if (myFavoritesList.length === 0) {
         alert("YOU HAVE NO BOOKS SAVED");
       } else {
+        //console.log(myFavoritesList)
         renderFavoritesList(myFavoritesList);
       }
     });
@@ -176,6 +214,7 @@ function renderFavoritesList(myFavoriteList){
         const bookObj = JSON.parse(book)
         let bookTitle = bookObj.title
         let imgSrc = bookObj.src;
+        let text = bookObj.text
     
         // Create a column element to hold the card
         const col = document.createElement("div");
@@ -201,11 +240,13 @@ function renderFavoritesList(myFavoriteList){
         let objBook = {
           title: bookTitle,
           src: imgSrc,
+          text: "",
         };
 
         let p = document.createElement("p")
         p.innerText = ""
-         card.appendChild(p)
+        //card.appendChild(p)
+         cardBody.appendChild(p)
 
        // removes book
         let deleteButton = document.createElement("button");
@@ -213,9 +254,37 @@ function renderFavoritesList(myFavoriteList){
         deleteButton.value = JSON.stringify(objBook);
         deleteButton.style.marginBottom = "5px";
         deleteButton.classList.add("btn", "btn-danger");
-        deleteButton.addEventListener("click", function() {
+        deleteButton.addEventListener("click", function(event) {
+          event.stopPropagation()
+          deleteButton.remove();
+          notesButton.remove();
+
+          let warningP = document.createElement("p")
+          warningP.innerText = "⛔️ Are your sure you want to delete this book? ⛔️"
+          warningP.style.color = "yellow"
+          cardBody.appendChild(warningP);
+
+          let noButton = document.createElement("button")
+          noButton.classList.add("btn", "btn-success")
+          noButton.innerText = "NO"
+          noButton.style.margin = "3px";
+          noButton.addEventListener("click", function(event){
+            event.stopPropagation();
+            renderFavoritesList(myFavoriteList)
+          })
+          cardBody.appendChild(noButton);
+
+          let yesButton = document.createElement("button")
+          yesButton.innerText = "yes"
+          yesButton.style.margin = "3px";
+          yesButton.classList.add("btn", "btn-danger")
+          yesButton.addEventListener("click", function(event){
+            event.stopPropagation()
             card.remove();
             myFavoriteList.splice(index, 1); // Remove book from myFavoriteList array
+          })
+          cardBody.appendChild(yesButton)
+
         });
 
         card.appendChild(deleteButton);
@@ -226,23 +295,41 @@ function renderFavoritesList(myFavoriteList){
         notesButton.classList.add("btn", "btn-primary", "mx-2");
 
 
-        notesButton.addEventListener("click", function() {
+        notesButton.addEventListener("click", function(event) {
+          event.stopPropagation()
           notesButton.remove()
             // Create the text area
             let notesTextarea = document.createElement("textarea");
             notesTextarea.classList.add("form-control", "my-2");
             notesTextarea.placeholder = "Type your notes here...";
             // Add the text area to the card
-            card.appendChild(notesTextarea);
+            //card.appendChild(notesTextarea);
+            cardBody.appendChild(notesTextarea);
 
           let addNote = document.createElement("button")
           card.appendChild(addNote);
           addNote.innerText = "add";
           addNote.classList.add("btn", "btn-success", "mx-2")
-          addNote.addEventListener("click", function(){
-           
+          addNote.addEventListener("click", function(event){
+            event.stopPropagation()
+
+           if(notesTextarea.value === ""){
+              alert("You must enter Text")
+              renderFavoritesList(myFavoriteList);
+           }else if(notesTextarea.value !== ""){
             p.innerText = notesTextarea.value
-    
+
+            let editButton = document.createElement("button")
+            editButton.classList.add("btn", "btn-info")
+            editButton.innerText = "Edit Note";
+            editButton.addEventListener("click", function(event){
+              event.stopPropagation()
+              editButton.remove()
+              card.appendChild(notesButton);
+            })
+            card.appendChild(editButton)
+           }
+
             notesTextarea.remove();
             addNote.remove();
           })
@@ -351,6 +438,7 @@ function showBooks(books) {
     let objBook = {
       title: titleBook,
       src: src,
+      text: "",
     };
 
     let wishButton = document.createElement("button");
@@ -359,6 +447,7 @@ function showBooks(books) {
     wishButton.style.marginBottom = "5px";
     wishButton.classList.add("btn", "btn-primary");
     wishButton.addEventListener("click", function (event) {
+      event.stopPropagation()
       myWishList.push(event.target.value);
     });
     card.appendChild(wishButton);
@@ -369,6 +458,7 @@ function showBooks(books) {
     favoriteButton.value = JSON.stringify(objBook);;
     favoriteButton.classList.add("btn", "btn-primary");
     favoriteButton.addEventListener("click", function (event) {
+      event.stopPropagation()
         myFavoritesList.push(event.target.value)
     });
     card.appendChild(favoriteButton);
@@ -435,6 +525,7 @@ function showCategories(cat) {
 showCategories(bookCategory);
 
 function showMeBooksFromCat(event) {
+  event.stopPropagation()
   let value = event.target.value;
   getBooks(value);
 }
